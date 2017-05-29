@@ -7,4 +7,4 @@ Installation
 ------------
 Tap: ```brew tap blogabe/xplanetfx```
 
-Install: ```brew install blogabe/xplanetfx/xplanetfx```
+Install: ```brew install xplanetfx```
