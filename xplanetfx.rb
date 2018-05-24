@@ -1,9 +1,9 @@
 class Xplanetfx < Formula
   desc "Configure, run or daemonize xplanet for HQ Earth wallpapers"
   homepage "http://mein-neues-blog.de/xplanetFX/"
-  url "http://repository.mein-neues-blog.de:9000/archive/xplanetfx-2.6.13_all.tar.gz"
-  version "2.6.13"
-  sha256 "ab5557555af6b5134b53174023709fff2cd64895f930b474eb695222a23c9feb"
+  url "http://repository.mein-neues-blog.de:9000/archive/xplanetfx-2.6.14_all.tar.gz"
+  version "2.6.14"
+  sha256 "1d4a451ff30cbe520adde4ee4f70b943c020950d97acc643d25ee7339cc2b250"
 
   option "without-gui", "Build to run xplanetFX from the command-line only"
   option "without-gnu-sed", "Build to use GNU sed instead of macOS sed"
