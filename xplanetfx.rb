@@ -7,14 +7,31 @@ class Xplanetfx < Formula
 
   option "without-gui", "Build to run xplanetFX from the command-line only"
   option "without-gnu-sed", "Build to use GNU sed instead of macOS sed"
+  option "with-xp-all", "Build to use xplanet with all default options"
+  option "with-complete", "Build to use xplanet with all default options and GNU sed instead of macOS sed"
 
-  depends_on "xplanet"
+  
+  if !(File.file?(Formula["xplanet"].opt_prefix/"bin"/"xplanet"))
+    if build.with?("xp-all") || build.with?("complete")
+      puts "Installing default Xplanet configuration (Homebrew's default configuration is only a subset)."
+      depends_on "blogabe/xplanet/xplanet" => %W[ with-pango --with-netpbm --with-cspice ]
+    else
+      puts "Installing Xplanet to match Homebrew's default configuration."
+      depends_on "blogabe/xplanet/xplanet"
+    end
+  else
+    puts "Homebrew Xplanet is already installed so skip this tap's version."
+    if build.with?("xp-all") || build.with?("complete")
+      puts "Skipping this tap's Xplanet installation.  Uninstall Homebrew's version first."
+    end
+  end
+
   depends_on "imagemagick"
   depends_on "wget"
   depends_on "coreutils"
-  depends_on "gnu-sed" => :optional
+  depends_on "gnu-sed" if build.with?("gnu-sed") || build.with?("complete")
 
-  if build.with? "gui"
+  if build.with?("gui")
     depends_on "librsvg"
     depends_on "pygtk" => "with-libglade"
   end
@@ -27,7 +44,7 @@ class Xplanetfx < Formula
     prefix.install "bin", "share"
 
     path = "#{Formula["coreutils"].opt_libexec}/gnubin"
-    path += ":#{Formula["gnu-sed"].opt_libexec}/gnubin" if build.with?("gnu-sed")
+    path += ":#{Formula["gnu-sed"].opt_libexec}/gnubin" if build.with?("gnu-sed") || build.with?("complete")
     if build.with?("gui")
       ENV.prepend_create_path "PYTHONPATH", "#{HOMEBREW_PREFIX}/lib/python2.7/site-packages/gtk-2.0"
       ENV.prepend_create_path "GDK_PIXBUF_MODULEDIR", "#{HOMEBREW_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders"
@@ -41,9 +58,5 @@ class Xplanetfx < Formula
       ENV["GDK_PIXBUF_MODULEDIR"]="#{HOMEBREW_PREFIX}/lib/gdk-pixbuf-2.0/2.10.0/loaders"
       system "#{HOMEBREW_PREFIX}/bin/gdk-pixbuf-query-loaders", "--update-cache"
     end
-  end
-
-  test do
-    system "#{bin}/xplanetFX", "--help"
   end
 end
