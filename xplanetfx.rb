@@ -10,7 +10,6 @@ class Xplanetfx < Formula
   option "with-xp-all", "Build to use xplanet with all default options"
   option "with-complete", "Build to use xplanet with all default options and GNU sed instead of macOS sed"
 
-  
   if !(File.file?(Formula["xplanet"].opt_prefix/"bin"/"xplanet"))
     if build.with?("xp-all") || build.with?("complete")
       puts "Installing default Xplanet configuration (Homebrew's default configuration is only a subset)."
