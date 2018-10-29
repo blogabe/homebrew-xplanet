@@ -9,8 +9,24 @@ Installation
 ------------
 Tap: ```brew tap blogabe/xplanet```
 
-To install Xplanet w/ Homebrew's default compilation options: `brew install blogabe/xplanet/xplanet`
+To install Xplanet:
 
-To install Xplanet w/ the default compilation options: `brew install blogabe/xplanet/xplanet --with-all`
+```
+brew install blogabe/xplanet/xplanet
+  --with-all installs all the default Xplanet compile options,
+    i.e., it adds pango, netpbm, and cspice to Homebrew's default compile options
+  --with-pango adds pango to Homebrew's default compile options
+  --with-netpbm adds pbm to Homebrew's default compile options
+  --with-cspice adds cspice to Homebrew's default compile options
+  --with-X11 compiles with X11 support instead of Apple Aqua (not part of --with-all)
+```
 
-To install xplanetFX: `brew install xplanetfx [--with-complete]`
+To install xplanetFX:
+
+```
+brew install xplanetfx
+  --with-gnu-sed uses GNU sed rather than Apple's version
+  --with-xp-all installs Xplanet dependency with default compile options
+  --with-complete adds GNU sed and installs Xplanet's default compile options
+  --without-gui only supports command line usage (skinnier install)
+```
