@@ -10,21 +10,21 @@ class Xplanetfx < Formula
   option "with-xp-all", "Build to use xplanet with all default options"
   option "with-complete", "Build to use xplanet with all default options and GNU sed instead of macOS sed"
 
-  if (File.file?(Formula["xplanet"].opt_prefix/"bin"/"xplanet"))
-    puts "Homebrew Xplanet is already installed so skip this tap's version."
-    if build.with?("xp-all") || build.with?("complete")
-      puts "Skipping this tap's Xplanet installation.  Uninstall Homebrew's version first."
-    end
-  else
-    if build.with?("xp-all") || build.with?("complete")
-      puts "Installing default Xplanet configuration (Homebrew's default configuration is only a subset)."
-      depends_on "blogabe/xplanet/xplanet" => %W[ with-pango --with-netpbm --with-cspice ]
-    else
-      puts "Installing Xplanet to match Homebrew's default configuration."
-      depends_on "blogabe/xplanet/xplanet"
-    end
-  end
-
+  # if (File.file?(Formula["xplanet"].opt_prefix/"bin"/"xplanet"))
+  #   puts "Homebrew Xplanet is already installed so skip this tap's version."
+  #   if build.with?("xp-all") || build.with?("complete")
+  #     puts "Skipping this tap's Xplanet installation.  Uninstall Homebrew's version first."
+  #   end
+  # else
+  #   if build.with?("xp-all") || build.with?("complete")
+  #     puts "Installing default Xplanet configuration (Homebrew's default configuration is only a subset)."
+  #     depends_on "blogabe/xplanet/xplanet" => %W[ with-pango --with-netpbm --with-cspice ]
+  #   else
+  #     puts "Installing Xplanet to match Homebrew's default configuration."
+  #     depends_on "blogabe/xplanet/xplanet"
+  #   end
+  # end
+  depends_on "blogabe/xplanet/xplanet"
   depends_on "imagemagick"
   depends_on "wget"
   depends_on "coreutils"
