@@ -11,9 +11,9 @@ class Xplanetfx < Formula
   option "with-complete", "Build to use xplanet with all default options and GNU sed instead of macOS sed"
 
   if (File.file?(Formula["xplanet"].opt_prefix/"bin"/"xplanet"))
-    puts "Homebrew Xplanet is already installed so skip this tap's version."
+    puts "Xplanet is already installed but we don't kow if its Homebrew's version of this tap's version."
     if build.with?("xp-all") || build.with?("complete")
-      puts "Skipping this tap's Xplanet installation.  Uninstall Homebrew's version first."
+      puts "Skipping this tap's Xplanet installation.  Uninstall Homebrew's version of Xplanet first."
     end
   else
     if build.with?("xp-all") || build.with?("complete")
