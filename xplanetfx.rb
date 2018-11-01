@@ -30,7 +30,6 @@ class Xplanetfx < Formula
   if (xpHomebrew==1)
     if (xpblogabe==1)
       puts "There appear to be more than one version of Xplanet installed.  `brew uninstall` the redundant versions and retry xplanetFX installation."
-      goto end;
     else
       # Homebrew Xplanet is already installed.  Keep on using this version, but alert user.
       puts "Looks like you're already using Homebrew's Xplanet formula.  This should not be a problem, but you may want to consider using this tap's version of Xplanet."
