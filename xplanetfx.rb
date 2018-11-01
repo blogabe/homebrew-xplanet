@@ -71,6 +71,7 @@ class Xplanetfx < Formula
     bin.env_script_all_files(libexec+"bin", :PATH => "#{path}:$PATH", :PYTHONPATH => ENV["PYTHONPATH"], :GDK_PIXBUF_MODULEDIR => ENV["GDK_PIXBUF_MODULEDIR"])
 
     done:
+    .end
   end
 
   def post_install
