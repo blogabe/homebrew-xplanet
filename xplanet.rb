@@ -3,7 +3,9 @@ class Xplanet < Formula
   homepage "https://xplanet.sourceforge.io/"
   url "https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz"
   sha256 "4380d570a8bf27b81fb629c97a636c1673407f4ac4989ce931720078a90aece7"
-  revision 3
+  # I append '99.' to differentiate from Xplanet or any other user tap version of Xplanet.
+  # in this case, Xplanet revision is set to 2, but I have this set to 3 because this version includes the leap second fix.
+  revision 99.3
 
   option "with-x11", "Build for X11 instead of Aqua"
   option "with-all", "Build with default Xplanet configuration dependencies"
