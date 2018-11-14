@@ -10,43 +10,15 @@ class Xplanetfx < Formula
   option "with-xp-all", "Build to use xplanet with all default options"
   option "with-complete", "Build to use xplanet with all default options and GNU sed instead of macOS sed"
 
-  xpHomebrew=0
-  xpblogabe=0
-  if !File.exists?("#{HOMEBREW_PREFIX}/Cellar/xplanet")
-    # Xplanet is not installed.  Use this tap's version.
-    xpblogabe=1
+  if build.with?("xp-all") || build.with?("complete")
+    depends_on "blogabe/xplanet/xplanet" => "with-pango --with-netpbm --with-cspice"
   else
-    # Xplanet is already installed.  Determine which version and do some error checking.
-     Dir.foreach("#{HOMEBREW_PREFIX}/Cellar/xplanet") do |xpVersion|
-      next if xpVersion == '.' or xpVersion == '..'
-      if xpVersion.include? "_99."
-        xpblogabe=1
-      else
-        xpHomebrew=1
-      end
-    end
+    depends_on "blogabe/xplanet/xplanet"
   end
-
-  if (xpHomebrew==1)
-    if (xpblogabe==1)
-      puts "There appear to be more than one version of Xplanet installed.  `brew uninstall` the redundant versions and retry xplanetFX installation."
-    else
-      # Homebrew Xplanet is already installed.  Keep on using this version, but alert user.
-      puts "Looks like you're already using Homebrew's Xplanet formula.  This should not be a problem, but you may want to consider using this tap's version of Xplanet."
-      depends_on "xplanet"
-    end
-  else
-    # Use this tap's version of Xplanet.
-    if build.with?("xp-all") || build.with?("complete")
-      depends_on "blogabe/xplanet/xplanet" => %W[ with-pango --with-netpbm --with-cspice ]
-    else
-      depends_on "blogabe/xplanet/xplanet"
-    end
-  end
-
   depends_on "imagemagick"
   depends_on "wget"
   depends_on "coreutils"
+
   depends_on "gnu-sed" if build.with?("gnu-sed") || build.with?("complete")
 
   if build.with?("gui")
