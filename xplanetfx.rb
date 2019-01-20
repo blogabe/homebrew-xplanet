@@ -23,7 +23,7 @@ class Xplanetfx < Formula
 
   if build.with?("gui")
     depends_on "librsvg"
-    depends_on "pygtk" => "with-libglade"
+    depends_on "blogabe/xplanet/pygtk" => "with-libglade"
   end
 
   skip_clean "share/xplanetFX"
