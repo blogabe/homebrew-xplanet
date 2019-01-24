@@ -50,7 +50,7 @@ class Xplanet < Formula
   # https://xplanet.sourceforge.io/FUDforum2/index.php?t=msg&th=592
   patch do
     url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-giflib5.patch"
-    sha256 "0a88a9c984462659da37db58d003da18a4c21c0f4cd8c5c52f5da2b118576d6e"
+    sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
   end
 
   def install
