@@ -21,12 +21,23 @@ brew install blogabe/xplanet/xplanet
   --with-X11 compiles with X11 support instead of Apple Aqua (not part of --with-all)
 ```
 
-To install xplanetFX:
+To install xplanetFX (by default, installs with gnu-sed and gui options):
 
 ```
-brew install xplanetfx
+brew install blogabe/xplanet/xplanetfx
   --with-gnu-sed uses GNU sed rather than Apple's version
   --with-xp-all installs Xplanet dependency with default compile options
   --with-complete adds GNU sed and installs Xplanet's default compile options
   --without-gui only supports command line usage (skinnier install)
 ```
+
+The above two install commands will build from source, but will still install the dependencies as bottles due to Homebrew changes.  Install with the below command ff you want to ensure all dependencies are also built from source:
+
+```
+brew install --build-from-source `brew deps -n --include-build --include-requirements --include-optional xplanetfx | grep -v ':'`
+brew install --build-from-source xplanetfx  <options>
+```
+
+This will download and build each and every single dependency whether or not you install with the full complement of options or merely a subset.  It's the only way given Homebrew's changes that you can ensure dependencies also get built from source.
+
+As of 25Jan2019, the first step described above will break while trying to install the graphite2 dependency.  Simply `brew install graphite2` then re-run the above steps.
