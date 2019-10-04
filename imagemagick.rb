@@ -10,7 +10,6 @@ class Imagemagick < Formula
   head "https://github.com/ImageMagick/ImageMagick.git"
 
   option "with-fftw", "Compile with FFTW support"
-  option "with-libheif", "Compile with HEIF support"
   option "with-perl", "Compile with PerlMagick"
 
   deprecated_option "with-libde265" => "with-libheif"
@@ -58,6 +57,7 @@ class Imagemagick < Formula
       --with-modules
       --with-openjp2
       --with-webp=yes
+      --with-heic=yes
       --enable-openmp
       ac_cv_prog_c_openmp=-Xpreprocessor\ -fopenmp
       ac_cv_prog_cxx_openmp=-Xpreprocessor\ -fopenmp
