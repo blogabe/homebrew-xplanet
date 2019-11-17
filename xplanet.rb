@@ -1,11 +1,43 @@
 class Xplanet < Formula
   desc "Create HQ wallpapers of planet Earth"
   homepage "https://xplanet.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz"
-  sha256 "4380d570a8bf27b81fb629c97a636c1673407f4ac4989ce931720078a90aece7"
-  # I prepend '99.' to differentiate from Xplanet or any other user tap version of Xplanet.
-  # in this case, Xplanet revision is set to 2, but I have this set to 3 because this version includes the leap second fix.
-  revision 99.3
+
+  stable do
+    url "https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz"
+    sha256 "4380d570a8bf27b81fb629c97a636c1673407f4ac4989ce931720078a90aece7"
+
+    # Fix compilation with giflib 5
+    # https://xplanet.sourceforge.io/FUDforum2/index.php?t=msg&th=592
+    patch do
+      url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-giflib5.patch"
+      sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
+    end
+  end
+
+  # Xplanet has had many changes since the last formal release and keeping it up to date with patches
+  # is clunky.  Adding HEAD download link to most current stable commit that compiles.
+  head do
+    dot = 214
+    url "https://svn.code.sf.net/p/xplanet/code/trunk", :revision => "#{dot}"
+    version "1.3.1.#{dot}"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+
+    if dot < 214
+      patch do
+        url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-giflib5.patch"
+        sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
+      end
+    end
+  end
+
+  # I prepend '99.' to differentiate my revisions, which are appended to the version number, from Xplanet
+  # or any other user tap version of Xplanet. 
+  # The actual revision number set here is independent of the revision the main core formula sets if at all.
+  # Here, it refers to either the GifLib 5 patch from last stable release or the last compile-able commit.
+  revision 99.1
 
   option "with-x11", "Build for X11 instead of Aqua"
   option "with-all", "Build with default Xplanet configuration dependencies"
@@ -28,30 +60,11 @@ class Xplanet < Formula
     depends_on "cspice"
   end
 
+  # These are optional because they are not as widely used (cspice) or require a lot of deps inflating
+  # time to compile, tools installed, ... (pango and netpbm).
   depends_on "pango" => :optional
   depends_on "netpbm" => :optional
   depends_on "cspice" => :optional
-
-  # patches bug in 1.3.1 with flag -num_times=2 (1.3.2 will contain fix, when released)
-  # https://sourceforge.net/p/xplanet/code/208/tree/trunk/src/libdisplay/DisplayOutput.cpp?diff=5056482efd48f8457fc7910a:207
-  patch :p2 do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-ntimes.patch"
-    sha256 "3f95ba8d5886703afffdd61ac2a0cd147f8d659650e291979f26130d81b18433"
-  end
-
-  # patches bug in 1.3.1 related to 2017 leap second (1.3.2 will contain fix, when released)
-  # https://sourceforge.net/p/xplanet/code/209/tree//trunk/src/xpUtil.cpp?diff=205
-  patch :p2 do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-2017leapsecond.patch"
-    sha256 "bd0dbb4ebc4f92b75d29ae1c58d1b1f1f6507c436fef41528d41e71f01733aaa"
-  end
-
-  # Fix compilation with giflib 5
-  # https://xplanet.sourceforge.io/FUDforum2/index.php?t=msg&th=592
-  patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-giflib5.patch"
-    sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
-  end
 
   def install
     args = %W[
@@ -83,6 +96,7 @@ class Xplanet < Formula
     end
 
     system "./configure", *args
+    system "make"
     system "make", "install"
   end
 end
