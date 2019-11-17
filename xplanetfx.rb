@@ -4,6 +4,8 @@ class Xplanetfx < Formula
   url "http://repository.mein-neues-blog.de:9000/archive/xplanetfx-2.6.14_all.tar.gz"
   version "2.6.14"
   sha256 "1d4a451ff30cbe520adde4ee4f70b943c020950d97acc643d25ee7339cc2b250"
+
+  # Revision references the change to pulling clouds from Xeric Designs now that xplanetclouds service is no longer available.
   revision 1
 
   option "without-gui", "Build to run xplanetFX from the command-line only"
@@ -16,11 +18,11 @@ class Xplanetfx < Formula
   else
     depends_on "blogabe/xplanet/xplanet"
   end
+
+  depends_on "coreutils"
+  depends_on "gnu-sed" if build.with?("gnu-sed") || build.with?("complete")
   depends_on "imagemagick"
   depends_on "wget"
-  depends_on "coreutils"
-
-  depends_on "gnu-sed" if build.with?("gnu-sed") || build.with?("complete")
 
   if build.with?("gui")
     depends_on "librsvg"
@@ -31,8 +33,10 @@ class Xplanetfx < Formula
 
   def install
     inreplace "bin/xplanetFX", "WORKDIR=/usr/share/xplanetFX", "WORKDIR=#{HOMEBREW_PREFIX}/share/xplanetFX"
-    inreplace "bin/xplanetFX", "FETCHURL=\"http://www.xplanetclouds.com/clouds/4096/clouds_4096.jpg\"", "FETCHURL=\"https://secure.xericdesign.com/xplanet/clouds/4096/clouds-4096.jpg\""
-    inreplace "bin/xplanetFX", "FETCHURL=\"http://www.xplanetclouds.com/clouds/2048/clouds_2048.jpg\"", "FETCHURL=\"https://secure.xericdesign.com/xplanet/clouds/2048/clouds-2048.jpg\""
+    inreplace "bin/xplanetFX", "FETCHURL=\"http://www.xplanetclouds.com/clouds/4096/clouds_4096.jpg\"",
+      "FETCHURL=\"https://secure.xericdesign.com/xplanet/clouds/4096/clouds-4096.jpg\""
+    inreplace "bin/xplanetFX", "FETCHURL=\"http://www.xplanetclouds.com/clouds/2048/clouds_2048.jpg\"",
+      "FETCHURL=\"https://secure.xericdesign.com/xplanet/clouds/2048/clouds-2048.jpg\""
     inreplace "bin/xplanetFX", "SERVERITLE=\"xplanetclouds.com\"", "SERVERITLE=\"xericdesign.com\""
 
     prefix.install "bin", "share"
