@@ -1,18 +1,42 @@
 class Xplanet < Formula
   desc "Create HQ wallpapers of planet Earth"
   homepage "https://xplanet.sourceforge.io/"
+
+  stable do
+    url "https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz"
+    sha256 "4380d570a8bf27b81fb629c97a636c1673407f4ac4989ce931720078a90aece7"
+
+    # Fix compilation with giflib 5
+    # https://xplanet.sourceforge.io/FUDforum2/index.php?t=msg&th=592
+    patch do
+      url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-giflib5.patch"
+      sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
+    end
+  end
+
   # Xplanet has had many changes since the last formal release and keeping it up to date with patches
-  # is clunky.  I'm going to shift to the most current commit and update the version manually.
-  #
-  # url "https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz"
-  # sha256 "4380d570a8bf27b81fb629c97a636c1673407f4ac4989ce931720078a90aece7"
-  url "https://sourceforge.net/code-snapshots/svn/x/xp/xplanet/code/xplanet-code-r220-trunk.zip"
-  sha256 "c92ac4f85e79bf8f0331a462d30dc260c2a38b97f2c2d33b91ebfde7470cf69a"
-  version "1.3.1.220"
-  # 
-  # I prepend '99.' to differentiate my revisions from Xplanet or any other user tap version of Xplanet.
+  # is clunky.  Adding HEAD download link to most current stable commit that compiles.
+  head do
+    dot = 214
+    url "https://svn.code.sf.net/p/xplanet/code/trunk", :revision => "#{dot}"
+    version "1.3.1.#{dot}"
+
+    depends_on "autoconf" => :build
+    depends_on "automake" => :build
+    depends_on "libtool" => :build
+
+    if dot < 214
+      patch do
+        url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-giflib5.patch"
+        sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
+      end
+    end
+  end
+
+  # I prepend '99.' to differentiate my revisions, which are appended to the version number, from Xplanet
+  # or any other user tap version of Xplanet. 
   # The actual revision number set here is independent of the revision the main core formula sets if at all.
-  # Here, it refers to the GifLib 5 patch.
+  # Here, it refers to either the GifLib 5 patch from last stable release or the last compile-able commit.
   revision 99.1
 
   option "with-x11", "Build for X11 instead of Aqua"
@@ -36,16 +60,11 @@ class Xplanet < Formula
     depends_on "cspice"
   end
 
+  # These are optional because they are not as widely used (cspice) or require a lot of deps inflating
+  # time to compile, tools installed, ... (pango and netpbm).
   depends_on "pango" => :optional
   depends_on "netpbm" => :optional
   depends_on "cspice" => :optional
-
-  # Fix compilation with giflib 5
-  # https://xplanet.sourceforge.io/FUDforum2/index.php?t=msg&th=592
-  patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-giflib5.patch"
-    sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
-  end
 
   def install
     args = %W[
@@ -77,6 +96,7 @@ class Xplanet < Formula
     end
 
     system "./configure", *args
+    system "make"
     system "make", "install"
   end
 end
