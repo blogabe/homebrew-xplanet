@@ -17,7 +17,7 @@ class Xplanet < Formula
     # Fix compilation with giflib 5
     # https://xplanet.sourceforge.io/FUDforum2/index.php?t=msg&th=592
     patch do
-      url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-giflib5.patch"
+      url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-giflib5.patch"
       sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
     end
   end
@@ -35,7 +35,7 @@ class Xplanet < Formula
 
     if dot < 214
       patch do
-        url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/xplanet-1.3.1-giflib5.patch"
+        url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-giflib5.patch"
         sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
       end
     end
