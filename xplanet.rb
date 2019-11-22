@@ -2,9 +2,17 @@ class Xplanet < Formula
   desc "Create HQ wallpapers of planet Earth"
   homepage "https://xplanet.sourceforge.io/"
 
+  # I use revision to differentiate this formula on this tap from homebrew's core formula or another user's version
+  # by using '99'.  This is appended to either the stable or head versions and comes before any patch revision.
+  # The patch revision is independent of the revision homebrew core formula uses.  It may or may not match.  Here,
+  # the '.1' refer to the patch for the stable release; it's not needed for the head release, but cleaner to let it be.
+  revision 99.1
+
   stable do
     url "https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz"
     sha256 "4380d570a8bf27b81fb629c97a636c1673407f4ac4989ce931720078a90aece7"
+
+    depends_on "pkg-config" => :build
 
     # Fix compilation with giflib 5
     # https://xplanet.sourceforge.io/FUDforum2/index.php?t=msg&th=592
@@ -18,7 +26,7 @@ class Xplanet < Formula
   # is clunky.  Adding HEAD download link to most current stable commit that compiles.
   head do
     dot = 214
-    url "https://svn.code.sf.net/p/xplanet/code/trunk", :revision => "#{dot}"
+    url "https://svn.code.sf.net/p/xplanet/code/trunk", :revision => dot
     version "1.3.1.#{dot}"
 
     depends_on "autoconf" => :build
@@ -33,20 +41,12 @@ class Xplanet < Formula
     end
   end
 
-  # I prepend '99.' to differentiate my revisions, which are appended to the version number, from Xplanet
-  # or any other user tap version of Xplanet. 
-  # The actual revision number set here is independent of the revision the main core formula sets if at all.
-  # Here, it refers to either the GifLib 5 patch from last stable release or the last compile-able commit.
-  revision 99.1
-
   option "with-x11", "Build for X11 instead of Aqua"
   option "with-all", "Build with default Xplanet configuration dependencies"
-  option "with-pango", "Build Xplanet to support Internationalized text library"
-  option "with-netpbm", "Build Xplanet with PNM graphic support"
   option "with-cspice", "Build Xplanet with JPLs SPICE toolkit support"
+  option "with-netpbm", "Build Xplanet with PNM graphic support"
+  option "with-pango", "Build Xplanet to support Internationalized text library"
 
-  depends_on "pkg-config" => :build
-  depends_on :x11 => :optional
   depends_on "freetype"
 
   depends_on "giflib" => :recommended
@@ -54,17 +54,19 @@ class Xplanet < Formula
   depends_on "libpng" => :recommended
   depends_on "libtiff" => :recommended
 
-  if build.with?("all")
-    depends_on "pango"
-    depends_on "netpbm"
-    depends_on "cspice"
-  end
-
   # These are optional because they are not as widely used (cspice) or require a lot of deps inflating
   # time to compile, tools installed, ... (pango and netpbm).
-  depends_on "pango" => :optional
-  depends_on "netpbm" => :optional
+  if build.with?("all")
+    depends_on "cspice"
+    depends_on "netpbm"
+    depends_on "pango"
+  end
+
   depends_on "cspice" => :optional
+  depends_on "netpbm" => :optional
+  depends_on "pango" => :optional
+
+  depends_on :x11 => :optional
 
   def install
     args = %W[
@@ -96,7 +98,6 @@ class Xplanet < Formula
     end
 
     system "./configure", *args
-    system "make"
     system "make", "install"
   end
 end
