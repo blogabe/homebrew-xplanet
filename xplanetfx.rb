@@ -21,10 +21,8 @@ class Xplanetfx < Formula
 
   depends_on "coreutils"
   depends_on "gnu-sed" if build.with?("gnu-sed") || build.with?("complete")
-
-  # coreutils installs imagemagick and wget
-  # depends_on "imagemagick"
-  # depends_on "wget"
+  depends_on "imagemagick"
+  depends_on "wget"
 
   if build.with?("gui")
     depends_on "librsvg"
