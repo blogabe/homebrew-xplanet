@@ -7,7 +7,7 @@ class Pygobject < Formula
 
   depends_on "pkg-config" => :build
   depends_on "glib"
-  depends_on "https://raw.githubusercontent.com/Homebrew/homebrew-core/86a44a0a552c673a05f11018459c9f5faae3becc/Formula/python@2.rb@2"
+  depends_on "https://raw.githubusercontent.com/Homebrew/homebrew-core/86a44a0a552c673a05f11018459c9f5faae3becc/Formula/python@2.rb"
 
   patch do
     url "https://raw.githubusercontent.com/Homebrew/formula-patches/85fa66a9/pygobject/2.28.7.diff"
