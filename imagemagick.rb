@@ -6,7 +6,7 @@ class Imagemagick < Formula
   # unnecessarily and older versions of the formula are broken.
   url "https://dl.bintray.com/homebrew/mirror/ImageMagick-7.0.10-13.tar.xz"
   mirror "https://www.imagemagick.org/download/releases/ImageMagick-7.0.10-13.tar.xz"
-  sha256 "9e2e16da683d50539bf9a5303350585d04d7ff045b9007f29a8beb652d4ff858"
+  sha256 "9d129eae1db867fa367b7c7ca9b0e9ae6f1cbd65a9f6db7e8176823a75ef0a0a"
   head "https://github.com/ImageMagick/ImageMagick.git"
 
   option "with-fftw", "Compile with FFTW support"
