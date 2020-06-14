@@ -39,5 +39,3 @@ brew install --build-from-source xplanetfx  <options>
 ```
 
 This will download and build each and every single dependency whether or not you install with the full complement of options or merely a subset.  It's the only way given Homebrew's changes that you can ensure dependencies also get built from source.
-
-As of 25Jan2019, the first step described above will break while trying to install the graphite2 dependency.  Run the above first step, then simply `brew install graphite2` after the error, before re-runing the above two commands.
