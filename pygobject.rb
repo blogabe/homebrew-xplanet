@@ -10,8 +10,8 @@ class Pygobject < Formula
   depends_on "blogabe/xplanet/python@2"
 
   patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/85fa66a9/pygobject/2.28.7.diff"
-    sha256 "ada3da43c84410cc165d8547ad3c7809435e09c9e8539882860d97cd1ce922b2"
+    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/pygobject-2.28.7-.diff"
+    sha256 "f0b3bb61f5a71d9ba84e386a3949d60bb069bc17541f4a7c12ea294b26477d9c"
   end
 
   def install
