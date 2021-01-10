@@ -1,14 +1,16 @@
 class Imagemagick < Formula
   desc "Tools and libraries to manipulate images in many formats"
   homepage "https://www.imagemagick.org/"
-  # Please always keep the Homebrew mirror as the primary URL as the
-  # ImageMagick site removes tarballs regularly which means we get issues
-  # unnecessarily and older versions of the formula are broken.
-  url "https://dl.bintray.com/homebrew/mirror/ImageMagick-7.0.10-56.tar.xz"
-  mirror "https://www.imagemagick.org/download/releases/ImageMagick-7.0.10-56.tar.xz"
-  sha256 "1b74468b0c18655aabfe4a741ef1973ad040402850d80fd083118998e2788920"
+  url "https://dl.bintray.com/homebrew/mirror/ImageMagick-7.0.10-57.tar.xz"
+  mirror "https://www.imagemagick.org/download/releases/ImageMagick-7.0.10-57.tar.xz"
+  sha256 "5018d15f12963bd6d86c8a667fba2795ec818a71612b6064f84a0c29a545af21"
   license "ImageMagick"
   head "https://github.com/ImageMagick/ImageMagick.git"
+
+  livecheck do
+    url "https://www.imagemagick.org/download/"
+    regex(/href=.*?ImageMagick[._-]v?(\d+(?:\.\d+)+-\d+)\.t/i)
+  end
 
   option "with-fftw", "Compile with FFTW support"
   option "with-perl", "Compile with PerlMagick"
@@ -76,7 +78,7 @@ class Imagemagick < Formula
     args << "--without-wmf" if build.without? "libwmf"
 
     # versioned stuff in main tree is pointless for us
-    inreplace "configure", "${PACKAGE_NAME}-${PACKAGE_VERSION}", "${PACKAGE_NAME}"
+    inreplace "configure", "${PACKAGE_NAME}-${PACKAGE_BASE_VERSION}", "${PACKAGE_NAME}"
     system "./configure", *args
     system "make", "install"
   end
