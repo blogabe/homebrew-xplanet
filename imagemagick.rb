@@ -43,7 +43,7 @@ class Imagemagick < Formula
   depends_on "openexr" => :optional
   depends_on "pango" => :optional
   depends_on "perl" => :optional
-  depends_on :x11 => :optional
+  depends_on "libx11" => :optional
 
   skip_clean :la
 
@@ -90,7 +90,7 @@ class Imagemagick < Formula
     EOS
     s if build.with? "perl"
   end
-
+  
   test do
     assert_match "PNG", shell_output("#{bin}/identify #{test_fixtures("test.png")}")
     # Check support for recommended features and delegates.
