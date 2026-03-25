@@ -1,0 +1,14 @@
+--- a/src/ParseGeom.h
++++ b/src/ParseGeom.h
+@@ -53,6 +53,11 @@
+ *******************************************************************/
+ /* $XFree86: xc/lib/X11/Xutil.h,v 3.7 2003/11/17 22:20:11 dawes Exp $ */
+
++// from Xfuncproto.h
++#ifndef _Xconst
++#define _Xconst const
++#endif /* _Xconst */
++
+ /*
+  * Bitmask returned by XParseGeometry().  Each bit tells if the corresponding
+  * value (x, y, width, height) was found in the parsed string.

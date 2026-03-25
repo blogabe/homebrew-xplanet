@@ -1,0 +1,24 @@
+diff --git a/src/libannotate/addSpiceObjects.cpp b/src/libannotate/addSpiceObjects.cpp
+--- a/src/libannotate/addSpiceObjects.cpp
++++ b/src/libannotate/addSpiceObjects.cpp
+@@ -511,7 +511,7 @@
+     // Set the SPICELIB error response action to "RETURN":
+-    erract_c (  "SET", 200, "RETURN"  );
++    erract_c (  "SET", 200, (char *) "RETURN"  );
+     
+     // Output ALL CSPICE error messages on error:
+-    errprt_c (  "SET", 200, "NONE, ALL" );
++    errprt_c (  "SET", 200, (char *) "NONE, ALL"  );
+ 
+     Options *options = Options::getInstance();
+diff --git a/src/libdisplay/DisplayBase.cpp b/src/libdisplay/DisplayBase.cpp
+--- a/src/libdisplay/DisplayBase.cpp
++++ b/src/libdisplay/DisplayBase.cpp
+@@ -224,7 +224,7 @@
+                 tzSave = "TZ=";
+                 tzSave += tzEnv;
+             }
+-            putenv("TZ=UTC");
++            putenv((char *) "TZ=UTC");
+             tzset();
+         }
