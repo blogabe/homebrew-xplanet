@@ -1,9 +1,8 @@
+diff --git a/src/keywords.h b/src/keywords.h
 --- a/src/keywords.h
 +++ b/src/keywords.h
-@@ -55,7 +55,7 @@
-     "UTCLABEL",
-     "VERBOSITY", "VERSIONNUMBER", "VROOT",
-     "WAIT", "WINDOW", "WINDOWTITLE",
+@@ -57,5 +57,5 @@
+     "WAIT", "WINDOW", "WINDOWTITLE", 
 -    "XWINID", "XYZ", "XYZFILE"
 +    "XWINID", "XYZ", "XYZFILE",
      "LAST_WORD"

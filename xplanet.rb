@@ -68,14 +68,14 @@ class Xplanet < Formula
   # https://sourceforge.net/p/xplanet/code/224/
   patch do
     url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-r224-xconst.patch"
-    sha256 "6204410b2ffb3b00f5180cef6125c0ac8783209260e35055f7ccaf6231c993e4"
+    sha256 "d57eb756524a45b82a52602a3459e9b0a837f4b786911d873a570afab9e66fba"
   end
 
   # Backport r225: add trailing comma in keywords.h
   # https://sourceforge.net/p/xplanet/code/225/
   patch do
     url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-r225-trailing-comma.patch"
-    sha256 "bd6d3b74fe6dc408948f49ba111507e0a5731d79b11d0801a35c54364a52bd18"
+    sha256 "666a9bf647815d92cf24b10c17d838a862bceea6a8052e2575fa2b288ae2b052"
   end
 
   def install
