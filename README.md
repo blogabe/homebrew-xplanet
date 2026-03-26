@@ -1,25 +1,41 @@
 # homebrew-xplanet
-Xplanet homebrew formula now hosted on personal tap due to Homebrew policy changes.  See https://github.com/Homebrew/homebrew-core/issues/31510 (no more options in formula) and previous to this https://github.com/Homebrew/brew/pull/2482 (no more options for default dependencies) for more information.
+Xplanet homebrew formula hosted on a personal tap due to Homebrew policy changes. See [no more options in formula](https://github.com/Homebrew/homebrew-core/issues/31510) and [no more options for default dependencies](https://github.com/Homebrew/brew/pull/2482) for background.
 
-This tap allows for customized compilation options for Xplanet and xplanetFX mirroring how they used to work in Homebrew prior to the policy changes.  They will continue to be updated with patches and version updates and in some cases may be more up to date than the formula in Homebrew.
+This tap allows for customized compilation options for Xplanet mirroring how they used to work in Homebrew prior to the policy changes. The formula includes all upstream patches through SVN r225, keeping it current with the latest source fixes.
 
-Xplanet, by default, compiles with the following libraries: freetype, gif, jpeg, png, tiff, pango, pnm, and cspice.  Xplanet on Homebrew installs only with png, jpeg, tiff, gif, and freetype; presumably because the others take too long to install (pango) or not as widely used (pnm through netpbm and cspice).  The default option in this tap mimics Homebrew's default, but allows for any desired combination and supports both Apple Aqua and X11.
+## Installation
 
-Installation
-------------
-Tap: ```brew tap blogabe/xplanet```
+Tap:
+```
+brew tap blogabe/xplanet
+```
 
-To install Xplanet:
-
+Install Xplanet:
 ```
 brew install blogabe/xplanet/xplanet
-  --with-all installs all the default Xplanet compile options,
-    i.e., it adds pango, netpbm, and cspice to Homebrew's default compile options
-  --with-pango adds pango to Homebrew's default compile options
-  --with-netpbm adds pbm to Homebrew's default compile options
-  --with-cspice adds cspice to Homebrew's default compile options
-  --with-X11 compiles with X11 support instead of Apple Aqua (not part of --with-all)
 ```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `--with-all` | Install with all optional dependencies (pango, netpbm, cspice) |
+| `--with-cspice` | Add JPL SPICE toolkit support |
+| `--with-pango` | Add internationalized text support |
+| `--with-netpbm` | Add PNM graphic support |
+| `--without-giflib` | Disable giflib (enabled by default) |
+| `--without-jpeg` | Disable jpeg (enabled by default) |
+| `--without-libpng` | Disable libpng (enabled by default) |
+| `--without-libtiff` | Disable libtiff (enabled by default) |
+
+Example:
+```
+brew install --formula --build-from-source blogabe/xplanet/xplanet --with-cspice --without-giflib
+```
+
+## xplanetFX
+
+xplanetFX is no longer maintained and depends on Python 2, which has been removed from Homebrew. The formula and its supporting patches are retained in this repo for reference but are not expected to work.
 
 To install xplanetFX (by default, installs with gnu-sed and gui options):
 
