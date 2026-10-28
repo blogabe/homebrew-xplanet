@@ -55,25 +55,6 @@ brew reinstall --build-from-source blogabe/xplanet/xplanet
 
 `brew reinstall` reuses the previous installation options and accepts additional formula options. See the [Homebrew command reference](https://docs.brew.sh/Manpage) for details.
 
-## xplanetFX
+## Legacy archive
 
-xplanetFX is no longer maintained and depends on Python 2, which has been removed from Homebrew. The formula and its supporting patches are retained in this repo for reference but are not expected to work.
-
-To install xplanetFX (by default, installs with gnu-sed and gui options):
-
-```
-brew install blogabe/xplanet/xplanetfx
-  --with-gnu-sed uses GNU sed rather than Apple's version
-  --with-xp-all installs Xplanet dependency with default compile options
-  --with-complete adds GNU sed and installs Xplanet's default compile options
-  --without-gui only supports command line usage (skinnier install)
-```
-
-The above two install commands will build from source, but will still install the dependencies as bottles due to Homebrew changes.  Install with the below command if you want to ensure all dependencies are also built from source:
-
-```
-brew install --build-from-source `brew deps -n --include-build --include-requirements --include-optional xplanetfx | grep -v ':'`
-brew install --build-from-source xplanetfx  <options>
-```
-
-This will download and build each and every single dependency whether or not you install with the full complement of options or merely a subset.  It's the only way given Homebrew's changes that you can ensure dependencies also get built from source.
+Historical xplanetFX, Python 2/GTK, and custom ImageMagick formulae and supporting patches are retained for reference in [legacy/](legacy/README.md).

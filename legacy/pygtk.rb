@@ -15,7 +15,7 @@ class Pygtk < Formula
 
   # Allow building with recent Pango, where some symbols were removed
   patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/pygtk-2.24.0-pango.diff"
+    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/7fffa6d370648445d9b4e619cda3f02f45852145/patches/pygtk-2.24.0-pango.diff"
     sha256 "af3f22f9aad9a37f67b8cd56d80b1a191d01bff039d5ff5ce9aa9f90ea232feb"
   end
 
