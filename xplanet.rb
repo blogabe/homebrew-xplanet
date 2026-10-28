@@ -25,9 +25,15 @@ class Xplanet < Formula
 
   # These are optional because they are not as widely used (cspice) or require a lot of deps inflating
   # time to compile, tools installed, ... (pango and netpbm).
-  depends_on "cspice" => :optional
-  depends_on "netpbm" => :optional
-  depends_on "pango" => :optional
+  if build.with?("all")
+    depends_on "cspice"
+    depends_on "netpbm"
+    depends_on "pango"
+  else
+    depends_on "cspice" => :optional
+    depends_on "netpbm" => :optional
+    depends_on "pango" => :optional
+  end
 
   # Backport r207: fix build with modern C++ compilers (C++11+)
   # https://sourceforge.net/p/xplanet/code/207/
@@ -46,35 +52,35 @@ class Xplanet < Formula
   # Backport r214: fix compilation with giflib 5
   # https://sourceforge.net/p/xplanet/code/214/
   patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-r214-giflib5.patch"
+    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r214-giflib5.patch"
     sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
   end
 
   # Backport r222: fix int-to-unsigned-char narrowing errors in readConfig.cpp
   # https://sourceforge.net/p/xplanet/code/222/
   patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-r222-narrowing.patch"
+    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r222-narrowing.patch"
     sha256 "0f85f59870e2c2225ff79895fded895d2f73dd876ef02575e91fbbeb90be2722"
   end
 
   # Backport r223: fix string literal warnings in addSpiceObjects.cpp and DisplayBase.cpp
   # https://sourceforge.net/p/xplanet/code/223/
   patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-r223-string-literals.patch"
+    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r223-string-literals.patch"
     sha256 "dc77013027a5faed71861b28aa4a910eb48116163a380d8735329f7c6101869a"
   end
 
   # Backport r224: add _Xconst define to ParseGeom.h
   # https://sourceforge.net/p/xplanet/code/224/
   patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-r224-xconst.patch"
+    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r224-xconst.patch"
     sha256 "d57eb756524a45b82a52602a3459e9b0a837f4b786911d873a570afab9e66fba"
   end
 
   # Backport r225: add trailing comma in keywords.h
   # https://sourceforge.net/p/xplanet/code/225/
   patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/master/patches/xplanet-1.3.1-r225-trailing-comma.patch"
+    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r225-trailing-comma.patch"
     sha256 "666a9bf647815d92cf24b10c17d838a862bceea6a8052e2575fa2b288ae2b052"
   end
 
@@ -97,8 +103,8 @@ class Xplanet < Formula
     # Recommended deps: enabled by default, pass --without if user opted out
     args << (build.with?("giflib") ? "--with-gif" : "--without-gif")
     args << (build.with?("jpeg") ? "--with-jpeg" : "--without-jpeg")
-    args << (build.with?("libpng") ? "--with-libpng" : "--without-libpng")
-    args << (build.with?("libtiff") ? "--with-libtiff" : "--without-libtiff")
+    args << (build.with?("libpng") ? "--with-png" : "--without-png")
+    args << (build.with?("libtiff") ? "--with-tiff" : "--without-tiff")
 
     # Optional deps: disabled by default, pass --with if user opted in (or --with-all)
     if build.with?("cspice") || build.with?("all")
