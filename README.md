@@ -2,7 +2,7 @@
 
 Xplanet Homebrew formula hosted on a personal tap to retain custom build options. See [no more options in formula](https://github.com/Homebrew/homebrew-core/issues/31510) and [no more options for default dependencies](https://github.com/Homebrew/brew/pull/2482) for background.
 
-The formula builds Xplanet 1.3.1 with macOS Aqua support and backports SVN revisions r207, r208, r214, and r222–r225. The five patches hosted in this repository are pinned to [commit c12f559](https://github.com/blogabe/homebrew-xplanet/tree/c12f559b97ba8da69db029354739adc772b1bd9d/patches); all seven patches have SHA-256 checksums in [xplanet.rb](xplanet.rb).
+The formula builds Xplanet 1.3.1 with macOS Aqua support and backports SVN revisions r207, r208, r214, and r222–r225. The complete r214 GIF patch is pinned to [Homebrew core commit b09831f](https://github.com/Homebrew/homebrew-core/blob/b09831fb902aa803218dcd2d7335840e48645334/Patches/xplanet/xplanet-1.3.1-giflib5.patch), with an identical reference copy in [patches/](patches/xplanet-1.3.1-r214-giflib5.patch). The four r222–r225 patches remain pinned to [commit c12f559](https://github.com/blogabe/homebrew-xplanet/tree/c12f559b97ba8da69db029354739adc772b1bd9d/patches); all seven patches have SHA-256 checksums in [xplanet.rb](xplanet.rb).
 
 ## Installation
 
@@ -46,7 +46,7 @@ brew install --build-from-source blogabe/xplanet/xplanet --with-cspice --without
 
 ### Updating an existing installation
 
-The formula is version 1.3.1, revision 100. The revision bump makes revision 99 installations outdated so that `brew upgrade` rebuilds Xplanet against `jpeg-turbo`:
+The formula is version 1.3.1, revision 101. This revision includes the complete upstream r214 GIF fix and the `jpeg-turbo` dependency introduced in revision 100. Earlier revisions are outdated, so `brew upgrade` rebuilds Xplanet with the updated formula:
 
 ```sh
 brew update

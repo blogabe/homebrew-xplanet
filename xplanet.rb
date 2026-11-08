@@ -6,7 +6,7 @@ class Xplanet < Formula
   license "GPL-2.0-or-later"
 
   # Keep this tap's revision above Homebrew core and rebuild for dependency changes.
-  revision 100
+  revision 101
 
   option "with-all", "Build with all default Xplanet configuration dependencies"
   option "with-cspice", "Build Xplanet with JPLs SPICE toolkit support"
@@ -50,11 +50,11 @@ class Xplanet < Formula
     sha256 "3f95ba8d5886703afffdd61ac2a0cd147f8d659650e291979f26130d81b18433"
   end
 
-  # Backport r214: fix compilation with giflib 5
+  # Complete upstream r214 backport: fix compilation with giflib 5
   # https://sourceforge.net/p/xplanet/code/214/
   patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r214-giflib5.patch"
-    sha256 "6bde76973bc9e931756d260ac838b3726d1dad8f2f795b6ffa23849005d382d7"
+    url "https://raw.githubusercontent.com/Homebrew/homebrew-core/b09831fb902aa803218dcd2d7335840e48645334/Patches/xplanet/xplanet-1.3.1-giflib5.patch"
+    sha256 "781ac7db260d2d15e6ae90699714e6ef979abb73862c5c556c6a65f0a259c517"
   end
 
   # Backport r222: fix int-to-unsigned-char narrowing errors in readConfig.cpp
