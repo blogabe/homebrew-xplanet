@@ -17,7 +17,7 @@ Use the fully qualified formula name to select this tap's custom options. Homebr
 
 ### Options
 
-The default build enables FreeType, GIF, JPEG, PNG, and TIFF support. CSPICE, Pango, and Netpbm are disabled unless selected individually or through `--with-all`.
+The default build enables FreeType, GIF, JPEG (via `jpeg-turbo`), PNG, and TIFF support. CSPICE, Pango, and Netpbm are disabled unless selected individually or through `--with-all`.
 
 | Option | Description |
 |--------|-------------|
@@ -26,7 +26,7 @@ The default build enables FreeType, GIF, JPEG, PNG, and TIFF support. CSPICE, Pa
 | `--with-pango` | Add internationalized text support |
 | `--with-netpbm` | Add PNM graphic support |
 | `--without-giflib` | Disable GIF support |
-| `--without-jpeg` | Disable JPEG support |
+| `--without-jpeg-turbo` | Disable JPEG support (`--without-jpeg` remains a compatibility alias) |
 | `--without-libpng` | Disable PNG support |
 | `--without-libtiff` | Disable TIFF support |
 
@@ -46,14 +46,14 @@ brew install --build-from-source blogabe/xplanet/xplanet --with-cspice --without
 
 ### Updating an existing installation
 
-The formula is still version 1.3.1, revision 99. If that version is already installed, formula fixes alone do not make it outdated for `brew upgrade`. To rebuild it with the current formula:
+The formula is version 1.3.1, revision 100. The revision bump makes revision 99 installations outdated so that `brew upgrade` rebuilds Xplanet against `jpeg-turbo`:
 
 ```sh
 brew update
-brew reinstall --build-from-source blogabe/xplanet/xplanet
+brew upgrade --build-from-source blogabe/xplanet/xplanet
 ```
 
-`brew reinstall` reuses the previous installation options and accepts additional formula options. See the [Homebrew command reference](https://docs.brew.sh/Manpage) for details.
+To rebuild an already-current installation, use `brew reinstall --build-from-source blogabe/xplanet/xplanet`. Homebrew reuses the previous installation options, including the legacy `--without-jpeg` opt-out. See the [Homebrew command reference](https://docs.brew.sh/Manpage) for details.
 
 ## Legacy archive
 

@@ -5,21 +5,22 @@ class Xplanet < Formula
   sha256 "4380d570a8bf27b81fb629c97a636c1673407f4ac4989ce931720078a90aece7"
   license "GPL-2.0-or-later"
 
-  # I use revision to differentiate this formula on this tap from homebrew's core formula or another user's version
-  # by using '99'.
-  revision 99
+  # Keep this tap's revision above Homebrew core and rebuild for dependency changes.
+  revision 100
 
   option "with-all", "Build with all default Xplanet configuration dependencies"
   option "with-cspice", "Build Xplanet with JPLs SPICE toolkit support"
   option "with-netpbm", "Build Xplanet with PNM graphic support"
   option "with-pango", "Build Xplanet to support Internationalized text library"
 
+  deprecated_option "without-jpeg" => "without-jpeg-turbo"
+
   depends_on "automake" => :build
   depends_on "pkgconf" => :build
   depends_on "freetype"
 
   depends_on "giflib" => :recommended
-  depends_on "jpeg" => :recommended
+  depends_on "jpeg-turbo" => :recommended
   depends_on "libpng" => :recommended
   depends_on "libtiff" => :recommended
 
@@ -102,7 +103,7 @@ class Xplanet < Formula
 
     # Recommended deps: enabled by default, pass --without if user opted out
     args << (build.with?("giflib") ? "--with-gif" : "--without-gif")
-    args << (build.with?("jpeg") ? "--with-jpeg" : "--without-jpeg")
+    args << (build.with?("jpeg-turbo") ? "--with-jpeg" : "--without-jpeg")
     args << (build.with?("libpng") ? "--with-png" : "--without-png")
     args << (build.with?("libtiff") ? "--with-tiff" : "--without-tiff")
 
