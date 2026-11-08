@@ -2,7 +2,9 @@
 
 Xplanet Homebrew formula hosted on a personal tap to retain custom build options. See [no more options in formula](https://github.com/Homebrew/homebrew-core/issues/31510) and [no more options for default dependencies](https://github.com/Homebrew/brew/pull/2482) for background.
 
-The formula builds Xplanet 1.3.1 with macOS Aqua support and backports SVN revisions r207, r208, r214, and r222–r225. The complete r214 GIF patch is pinned to [Homebrew core commit b09831f](https://github.com/Homebrew/homebrew-core/blob/b09831fb902aa803218dcd2d7335840e48645334/Patches/xplanet/xplanet-1.3.1-giflib5.patch), with an identical reference copy in [patches/](patches/xplanet-1.3.1-r214-giflib5.patch). The four r222–r225 patches remain pinned to [commit c12f559](https://github.com/blogabe/homebrew-xplanet/tree/c12f559b97ba8da69db029354739adc772b1bd9d/patches); all seven patches have SHA-256 checksums in [xplanet.rb](xplanet.rb).
+The formula builds Xplanet 1.3.1 with macOS Aqua support and backports SVN revisions r207, r208, r214, and r222–r225. The complete r214 GIF patch is pinned to [Homebrew core commit b09831f](https://github.com/Homebrew/homebrew-core/blob/b09831fb902aa803218dcd2d7335840e48645334/Patches/xplanet/xplanet-1.3.1-giflib5.patch), with an identical reference copy in [patches/](patches/xplanet-1.3.1-r214-giflib5.patch). The four r222–r225 patches remain pinned to [commit c12f559](https://github.com/blogabe/homebrew-xplanet/tree/c12f559b97ba8da69db029354739adc772b1bd9d/patches); all patches have SHA-256 checksums in [xplanet.rb](xplanet.rb).
+
+The tap also includes a macOS wallpaper handoff fix. Xplanet waits for Finder's reply before removing a temporary desktop image, allowing time for first-use automation authorization. A failed or timed-out handoff reports the macOS error and retains the image in the temporary directory; repeated failures can leave multiple images there. Successful updates retain the usual temporary-file cleanup, and `-save_desktop_file` still keeps images when requested.
 
 ## Installation
 
@@ -46,7 +48,7 @@ brew install --build-from-source blogabe/xplanet/xplanet --with-cspice --without
 
 ### Updating an existing installation
 
-The formula is version 1.3.1, revision 101. This revision includes the complete upstream r214 GIF fix and the `jpeg-turbo` dependency introduced in revision 100. Earlier revisions are outdated, so `brew upgrade` rebuilds Xplanet with the updated formula:
+The formula is version 1.3.1, revision 102. This revision adds the macOS wallpaper handoff fix, retaining the complete upstream r214 GIF fix from revision 101 and the `jpeg-turbo` dependency introduced in revision 100. Earlier revisions are outdated, so `brew upgrade` rebuilds Xplanet with the updated formula:
 
 ```sh
 brew update

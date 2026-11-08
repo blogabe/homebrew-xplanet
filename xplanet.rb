@@ -6,7 +6,7 @@ class Xplanet < Formula
   license "GPL-2.0-or-later"
 
   # Keep this tap's revision above Homebrew core and rebuild for dependency changes.
-  revision 101
+  revision 102
 
   option "with-all", "Build with all default Xplanet configuration dependencies"
   option "with-cspice", "Build Xplanet with JPLs SPICE toolkit support"
@@ -83,6 +83,12 @@ class Xplanet < Formula
   patch do
     url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r225-trailing-comma.patch"
     sha256 "666a9bf647815d92cf24b10c17d838a862bceea6a8052e2575fa2b288ae2b052"
+  end
+
+  # Keep the temporary wallpaper available until Finder replies.
+  patch do
+    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/bfc88aab2d6d96c036e0eca5532f496091e0c431/patches/xplanet-1.3.1-aqua-reply.patch"
+    sha256 "e648863fceb52938ad08f189e3a6a2157fa637faa98692844151353ef949d571"
   end
 
   def install
