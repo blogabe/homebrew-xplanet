@@ -1,9 +1,11 @@
 class Xplanet < Formula
   desc "Create HQ wallpapers of planet Earth"
   homepage "https://xplanet.sourceforge.io/"
-  url "https://svn.code.sf.net/p/xplanet/code/trunk/", using: :svn, revision: "225"
+  url "https://github.com/blogabe/homebrew-xplanet/releases/download/xplanet-1.3.1.225/xplanet-1.3.1.225.tar.gz"
+  sha256 "e7ee5854542055b0dda8afb8fabdafd3978c7ac6f7cdd04ae47592431f3b3e24"
   version "1.3.1.225"
   license "GPL-2.0-or-later"
+  revision 1
 
   option "with-all", "Build with all default Xplanet configuration dependencies"
   option "with-cspice", "Build Xplanet with JPLs SPICE toolkit support"
@@ -12,7 +14,6 @@ class Xplanet < Formula
 
   deprecated_option "without-jpeg" => "without-jpeg-turbo"
 
-  depends_on "automake" => :build
   depends_on "pkgconf" => :build
   depends_on "freetype"
 
@@ -33,32 +34,9 @@ class Xplanet < Formula
     depends_on "pango" => :optional
   end
 
-  # Keep the temporary wallpaper available until Finder replies.
-  patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/bfc88aab2d6d96c036e0eca5532f496091e0c431/patches/xplanet-1.3.1-aqua-reply.patch"
-    sha256 "e648863fceb52938ad08f189e3a6a2157fa637faa98692844151353ef949d571"
-  end
-
   def install
-    # Keep the pkg-config prefix aligned with the existing FreeType consumers.
-    inreplace "acinclude.m4", "PKG_CHECK_MODULES([FREETYPE2]", "PKG_CHECK_MODULES([FREETYPE]"
-    inreplace "configure" do |s|
-      s.gsub! "FREETYPE2_CFLAGS", "FREETYPE_CFLAGS"
-      s.gsub! "FREETYPE2_LIBS", "FREETYPE_LIBS"
-      s.gsub! "svn-r224", version.to_s
-    end
-    inreplace "configure.ac", "svn-r224", version.to_s
-
-    # Generated files are patched above; do not regenerate with upstream Automake 1.16.
-    touch "aclocal.m4"
-    touch %w[configure config.h.in]
-    touch Dir["**/Makefile.in"]
-
-    # Update config.sub/config.guess to recognize modern macOS (darwin25+)
-    %w[config.sub config.guess].each do |fn|
-      am_dir = Formula["automake"].opt_share/"automake-#{Formula["automake"].version.major_minor}"
-      cp am_dir/fn, fn
-    end
+    # The archive already includes FreeType, Aqua and platform-helper fixes.
+    system "./prepare-build.sh"
 
     args = %W[
       --disable-dependency-tracking
