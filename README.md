@@ -2,7 +2,7 @@
 
 Xplanet Homebrew formula hosted on a personal tap to retain custom build options. See [no more options in formula](https://github.com/Homebrew/homebrew-core/issues/31510) and [no more options for default dependencies](https://github.com/Homebrew/brew/pull/2482) for background.
 
-The formula builds the complete upstream SVN r225 source snapshot as **1.3.1.225**, a local version designation rather than an official upstream release. The source URL is pinned to revision 225, including all changes since the 1.3.1 release; the former selective upstream backports are no longer applied. Historical patch files remain in [patches/](patches/) for reference.
+The formula builds the complete upstream SVN r225 source snapshot as **1.3.1.225**, a local version designation rather than an official upstream release. The source URL is pinned to revision 225, including all changes since the 1.3.1 release; the former selective upstream backports are no longer applied. Historical upstream backports are retained in [legacy/patches/xplanet-1.3.1/](legacy/patches/xplanet-1.3.1/) for reference; only the active Aqua handoff patch remains in [patches/](patches/).
 
 The build corrects r225's FreeType pkg-config variable prefix in both its Autoconf input and generated configure script, updates the reported version, and refreshes `config.guess`/`config.sub` for current macOS. It retains the checksum-pinned Aqua handoff patch.
 
