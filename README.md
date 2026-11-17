@@ -2,9 +2,13 @@
 
 Xplanet Homebrew formula hosted on a personal tap to retain custom build options. See [no more options in formula](https://github.com/Homebrew/homebrew-core/issues/31510) and [no more options for default dependencies](https://github.com/Homebrew/brew/pull/2482) for background.
 
-The formula builds the complete upstream SVN r225 source snapshot as **1.3.1.225**, a local version designation rather than an official upstream release. The source URL is pinned to revision 225, including all changes since the 1.3.1 release; the former selective upstream backports are no longer applied. Historical upstream backports are retained in [legacy/patches/xplanet-1.3.1/](legacy/patches/xplanet-1.3.1/) for reference; only the active Aqua handoff patch remains in [patches/](patches/).
+The formula builds the complete upstream SVN r225 source snapshot as **1.3.1.225**, a local version designation rather than an official upstream release. The checksum-pinned [release asset](https://github.com/blogabe/homebrew-xplanet/releases/tag/xplanet-1.3.1.225) includes all changes since 1.3.1 plus the maintenance fixes below. Installing this formula does not need Subversion or Autotools regeneration.
 
-The build corrects r225's FreeType pkg-config variable prefix in both its Autoconf input and generated configure script, updates the reported version, and refreshes `config.guess`/`config.sub` for current macOS. It retains the checksum-pinned Aqua handoff patch.
+The archive already contains the FreeType pkg-config prefix correction, Aqua handoff fix, local version string, and refreshed `config.guess`/`config.sub`. The formula runs the included `prepare-build.sh` to normalize generated-file timestamps; it does not apply those fixes a second time. The packaging revision is 1 (`1.3.1.225_1`); the binary reports `1.3.1.225`.
+
+Download the named `xplanet-1.3.1.225.tar.gz` release asset, not GitHub's automatically generated “Source code” archives, which contain this tap rather than Xplanet. The archive preserves upstream AUTHORS, COPYING and source notices. Xplanet remains the work of Hari Nair and contributors; this tap provides a maintained snapshot, not an official upstream release or a transfer of upstream maintainership.
+
+Historical upstream backports are retained in [legacy/patches/xplanet-1.3.1/](legacy/patches/xplanet-1.3.1/). The [Aqua patch](patches/) remains available for reference and review; its changes are already incorporated in the source archive.
 
 The tap also includes a macOS wallpaper handoff fix. Xplanet waits for Finder's reply before removing a temporary desktop image, allowing time for first-use automation authorization. A failed or timed-out handoff reports the macOS error and retains the image in the temporary directory; repeated failures can leave multiple images there. Successful updates retain the usual temporary-file cleanup, and `-save_desktop_file` still keeps images when requested.
 
