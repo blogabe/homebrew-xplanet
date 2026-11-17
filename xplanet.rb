@@ -1,12 +1,9 @@
 class Xplanet < Formula
   desc "Create HQ wallpapers of planet Earth"
   homepage "https://xplanet.sourceforge.io/"
-  url "https://downloads.sourceforge.net/project/xplanet/xplanet/1.3.1/xplanet-1.3.1.tar.gz"
-  sha256 "4380d570a8bf27b81fb629c97a636c1673407f4ac4989ce931720078a90aece7"
+  url "https://svn.code.sf.net/p/xplanet/code/trunk/", using: :svn, revision: "225"
+  version "1.3.1.225"
   license "GPL-2.0-or-later"
-
-  # Keep this tap's revision above Homebrew core and rebuild for dependency changes.
-  revision 102
 
   option "with-all", "Build with all default Xplanet configuration dependencies"
   option "with-cspice", "Build Xplanet with JPLs SPICE toolkit support"
@@ -36,55 +33,6 @@ class Xplanet < Formula
     depends_on "pango" => :optional
   end
 
-  # Backport r207: fix build with modern C++ compilers (C++11+)
-  # https://sourceforge.net/p/xplanet/code/207/
-  patch do
-    url "https://raw.githubusercontent.com/archlinux/svntogit-community/040965e32860345ca2d744239b6e257da33460a2/trunk/xplanet-c%2B%2B11.patch"
-    sha256 "e651c7081c43ea48090186580b5a2a5d5039ab3ffbf34f7dd970037a16081454"
-  end
-
-  # Backport r208: fix bug with -num_times flag
-  # https://sourceforge.net/p/xplanet/code/208/
-  patch :p2 do
-    url "https://raw.githubusercontent.com/Homebrew/homebrew-core/1cf441a0/Patches/xplanet/xplanet-1.3.1-ntimes.patch"
-    sha256 "3f95ba8d5886703afffdd61ac2a0cd147f8d659650e291979f26130d81b18433"
-  end
-
-  # Complete upstream r214 backport: fix compilation with giflib 5
-  # https://sourceforge.net/p/xplanet/code/214/
-  patch do
-    url "https://raw.githubusercontent.com/Homebrew/homebrew-core/b09831fb902aa803218dcd2d7335840e48645334/Patches/xplanet/xplanet-1.3.1-giflib5.patch"
-    sha256 "781ac7db260d2d15e6ae90699714e6ef979abb73862c5c556c6a65f0a259c517"
-  end
-
-  # Backport r222: fix int-to-unsigned-char narrowing errors in readConfig.cpp
-  # https://sourceforge.net/p/xplanet/code/222/
-  patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r222-narrowing.patch"
-    sha256 "0f85f59870e2c2225ff79895fded895d2f73dd876ef02575e91fbbeb90be2722"
-  end
-
-  # Backport r223: fix string literal warnings in addSpiceObjects.cpp and DisplayBase.cpp
-  # https://sourceforge.net/p/xplanet/code/223/
-  patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r223-string-literals.patch"
-    sha256 "dc77013027a5faed71861b28aa4a910eb48116163a380d8735329f7c6101869a"
-  end
-
-  # Backport r224: add _Xconst define to ParseGeom.h
-  # https://sourceforge.net/p/xplanet/code/224/
-  patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r224-xconst.patch"
-    sha256 "d57eb756524a45b82a52602a3459e9b0a837f4b786911d873a570afab9e66fba"
-  end
-
-  # Backport r225: add trailing comma in keywords.h
-  # https://sourceforge.net/p/xplanet/code/225/
-  patch do
-    url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/c12f559b97ba8da69db029354739adc772b1bd9d/patches/xplanet-1.3.1-r225-trailing-comma.patch"
-    sha256 "666a9bf647815d92cf24b10c17d838a862bceea6a8052e2575fa2b288ae2b052"
-  end
-
   # Keep the temporary wallpaper available until Finder replies.
   patch do
     url "https://raw.githubusercontent.com/blogabe/homebrew-xplanet/bfc88aab2d6d96c036e0eca5532f496091e0c431/patches/xplanet-1.3.1-aqua-reply.patch"
@@ -92,6 +40,20 @@ class Xplanet < Formula
   end
 
   def install
+    # Keep the pkg-config prefix aligned with the existing FreeType consumers.
+    inreplace "acinclude.m4", "PKG_CHECK_MODULES([FREETYPE2]", "PKG_CHECK_MODULES([FREETYPE]"
+    inreplace "configure" do |s|
+      s.gsub! "FREETYPE2_CFLAGS", "FREETYPE_CFLAGS"
+      s.gsub! "FREETYPE2_LIBS", "FREETYPE_LIBS"
+      s.gsub! "svn-r224", version.to_s
+    end
+    inreplace "configure.ac", "svn-r224", version.to_s
+
+    # Generated files are patched above; do not regenerate with upstream Automake 1.16.
+    touch "aclocal.m4"
+    touch %w[configure config.h.in]
+    touch Dir["**/Makefile.in"]
+
     # Update config.sub/config.guess to recognize modern macOS (darwin25+)
     %w[config.sub config.guess].each do |fn|
       am_dir = Formula["automake"].opt_share/"automake-#{Formula["automake"].version.major_minor}"
@@ -141,5 +103,6 @@ class Xplanet < Formula
 
   test do
     assert_predicate bin/"xplanet", :executable?
+    assert_match "Xplanet #{version}", shell_output("#{bin}/xplanet -version")
   end
 end
