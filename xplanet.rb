@@ -5,7 +5,10 @@ class Xplanet < Formula
   sha256 "e7ee5854542055b0dda8afb8fabdafd3978c7ac6f7cdd04ae47592431f3b3e24"
   version "1.3.1.225"
   license "GPL-2.0-or-later"
-  revision 1
+  revision 2
+
+  # Preserve the pinned source archive and apply the renderer-only Alpha-5 patch.
+  patch :DATA
 
   option "with-all", "Build with all default Xplanet configuration dependencies"
   option "with-cspice", "Build Xplanet with JPLs SPICE toolkit support"
@@ -81,6 +84,75 @@ class Xplanet < Formula
 
   test do
     assert_predicate bin/"xplanet", :executable?
-    assert_match "Xplanet #{version}", shell_output("#{bin}/xplanet -version")
+    output = shell_output("#{bin}/xplanet -version")
+    assert_match "Xplanet #{version}", output
+    assert_match "TLE catalog IDs: Alpha-5", output
   end
 end
+
+__END__
+diff --git a/src/Options.cpp b/src/Options.cpp
+--- a/src/Options.cpp
++++ b/src/Options.cpp
+@@ -925,6 +925,7 @@
+             break;
+         case VERSIONNUMBER:
+             printVersion();
++            cout << "TLE catalog IDs: Alpha-5" << endl;
+             exit(EXIT_SUCCESS);
+             break;
+         case VROOT:
+diff --git a/src/libsgp4sdp4/sgp_in.c b/src/libsgp4sdp4/sgp_in.c
+--- a/src/libsgp4sdp4/sgp_in.c
++++ b/src/libsgp4sdp4/sgp_in.c
+@@ -38,6 +38,29 @@
+ 
+ /*------------------------------------------------------------------*/
+ 
++/* Space-Track Alpha-5 extends the five-column field without changing
++   any of the orbital data. I and O are not part of the alphabet. */
++static int
++Catalog_Number(const char *field)
++{
++  static const char prefix[] = "ABCDEFGHJKLMNPQRSTUVWXYZ";
++  int i = 0, number = 0;
++  const char *letter = strchr(prefix, field[0]);
++  if (letter != NULL && *letter != '\0')
++    {
++      number = (int)(letter - prefix) + 10;
++      i = 1;
++    }
++  else
++    while (i < 4 && field[i] == ' ') i++;
++  for (; i < 5; i++)
++    {
++      if (field[i] < '0' || field[i] > '9') return 0;
++      number = 10 * number + (field[i] - '0');
++    }
++  return number;
++}
++
+ /* Carries out various checks on a TLE set to verify its validity */
+ /* tle_set is a character string holding the two lines read    */
+ /* from a text file containing NASA format Keplerian elements. */
+@@ -51,7 +74,8 @@
+   if( (tle_set[0] != '1') || (tle_set[69] != '2') )
+     return (0);
+   /* Verify that Satellite Number is same in both lines */
+-  if( strncmp( &tle_set[2], &tle_set[71], 5 ) != 0 )
++  if( Catalog_Number(&tle_set[2]) == 0
++      || strncmp( &tle_set[2], &tle_set[71], 5 ) != 0 )
+     return (0);
+   /* Check that various elements are in the right place */
+   if( 
+@@ -82,9 +106,7 @@
+ 
+   /** Decode Card 1 **/
+   /* Satellite's catalogue number */
+-  strncpy( buff, &tle_set[2],5 );
+-  buff[5] = '\0';
+-  tle->catnr = atoi(buff);
++  tle->catnr = Catalog_Number(&tle_set[2]);
+ 
+   /* International Designator for satellite */
+   strncpy( tle->idesg, &tle_set[9],8 );
