@@ -2,7 +2,7 @@ class Xplanet < Formula
   desc "Create HQ wallpapers of planet Earth"
   homepage "https://xplanet.sourceforge.io/"
   url "https://github.com/blogabe/xplanet-src/releases/download/v1.4.0/xplanet-1.4.0.tar.gz"
-  sha256 "b0509975e7444e4ab54b92028d46a6ff9a5d281620433dc725b7647db0e9d333"
+  sha256 "f61aa23e783d3b017008fd5bffb79c18584b73fa5fdd5ea4c60fc5d33db3ff8b"
   version "1.4.0"
   license "GPL-2.0-or-later"
 
