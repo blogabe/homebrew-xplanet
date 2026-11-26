@@ -2,7 +2,7 @@
 
 Xplanet Homebrew formula hosted on a personal tap to retain custom build options. See [no more options in formula](https://github.com/Homebrew/homebrew-core/issues/31510) and [no more options for default dependencies](https://github.com/Homebrew/brew/pull/2482) for background.
 
-This tap builds Xplanet **1.3.2** from [a maintained fork](https://github.com/blogabe/xplanet-src)
+This tap builds Xplanet **1.4.0** from [a maintained fork](https://github.com/blogabe/xplanet-src)
 of [Hari Nair’s Xplanet](https://xplanet.sourceforge.io/). It is a downstream
 release and does not require Subversion.
 
@@ -48,7 +48,7 @@ brew install --build-from-source blogabe/xplanet/xplanet --with-cspice --without
 
 ### Updating an existing installation
 
-Version 1.3.2 supersedes this tap’s 1.3.1.225 revision 3 build. Run:
+Version 1.4.0 supersedes this tap’s 1.3.1.225 revision 3 build. Run:
 
 ```sh
 brew update
@@ -59,6 +59,6 @@ To rebuild an already-current installation, use `brew reinstall --build-from-sou
 
 ## Source and build details
 
-For a direct build, download the named [`xplanet-1.3.2.tar.gz` release asset](https://github.com/blogabe/xplanet-src/releases/download/v1.3.2/xplanet-1.3.2.tar.gz), not GitHub’s automatic “Source code” archives. The formula pins the release asset’s SHA-256. Build instructions and the renderer’s history are in [xplanet-src](https://github.com/blogabe/xplanet-src).
+For a direct build, download the named [`xplanet-1.4.0.tar.gz` release asset](https://github.com/blogabe/xplanet-src/releases/download/v1.4.0/xplanet-1.4.0.tar.gz), not GitHub’s automatic “Source code” archives. The formula pins the release asset’s SHA-256. Build instructions and the renderer’s history are in [xplanet-src](https://github.com/blogabe/xplanet-src).
 
 For macOS Finder Automation troubleshooting, see the [recovery guide](https://github.com/blogabe/Xplanet/blob/main/docs/management.md#finder-automation-permission).
