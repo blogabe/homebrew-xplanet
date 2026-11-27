@@ -2,9 +2,9 @@
 
 Xplanet Homebrew formula hosted on a personal tap to retain custom build options. See [no more options in formula](https://github.com/Homebrew/homebrew-core/issues/31510) and [no more options for default dependencies](https://github.com/Homebrew/brew/pull/2482) for background.
 
-This tap builds Xplanet **1.3.1.225** from a maintained source snapshot, not an
-official upstream release. It does not require Subversion. The current Homebrew
-package includes Alpha-5 satellite support and Finder Automation troubleshooting.
+This tap builds Xplanet **1.4.0** from [a maintained fork](https://github.com/blogabe/xplanet-src)
+of [Hari Nair’s Xplanet](https://xplanet.sourceforge.io/). It is a downstream
+release and does not require Subversion.
 
 ## Installation
 
@@ -48,7 +48,7 @@ brew install --build-from-source blogabe/xplanet/xplanet --with-cspice --without
 
 ### Updating an existing installation
 
-Version 1.3.1.225 supersedes the earlier 1.3.1 revision 102 (`1.3.1_102`) build. Homebrew compares the source version before its packaging revision, so this is an upgrade without a revision-number workaround. Run:
+Version 1.4.0 supersedes this tap’s 1.3.1.225 revision 3 build. Run:
 
 ```sh
 brew update
@@ -59,20 +59,6 @@ To rebuild an already-current installation, use `brew reinstall --build-from-sou
 
 ## Source and build details
 
-Homebrew revision 3 (`1.3.1.225_3`) uses the checksum-pinned
-[`xplanet-1.3.1.225-source.2.tar.gz` release asset](https://github.com/blogabe/homebrew-xplanet/releases/tag/xplanet-1.3.1.225-source.2).
-Download that named asset for a direct build, not GitHub’s automatic “Source code”
-archives, which contain the tap. See `BUILDING.txt` and `SOURCE-CHANGES.txt` in
-the archive. The preceding archive remains available under its original tag.
+For a direct build, download the named [`xplanet-1.4.0.tar.gz` release asset](https://github.com/blogabe/xplanet-src/releases/download/v1.4.0/xplanet-1.4.0.tar.gz), not GitHub’s automatic “Source code” archives. The formula pins the release asset’s SHA-256. Build instructions and the renderer’s history are in [xplanet-src](https://github.com/blogabe/xplanet-src).
 
-The snapshot is based on upstream SVN r225 and retains the FreeType, Aqua and
-platform-helper fixes. Alpha-5 no longer needs a formula patch; check support
-with `xplanet -version`. On Finder Automation denial, the renderer retains its
-image and points to the [recovery guide](https://github.com/blogabe/Xplanet/blob/main/docs/management.md#finder-automation-permission).
-The archive retains the upstream authorship and license notices. Historical
-[upstream backports](legacy/patches/xplanet-1.3.1/) and the
-[original Aqua patch](patches/) remain available for reference.
-
-## Legacy archive
-
-Historical xplanetFX, Python 2/GTK, and custom ImageMagick formulae and supporting patches are retained for reference in [legacy/](legacy/README.md).
+For macOS Finder Automation troubleshooting, see the [recovery guide](https://github.com/blogabe/Xplanet/blob/main/docs/management.md#finder-automation-permission).

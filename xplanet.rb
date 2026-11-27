@@ -1,11 +1,10 @@
 class Xplanet < Formula
   desc "Create HQ wallpapers of planet Earth"
   homepage "https://xplanet.sourceforge.io/"
-  url "https://github.com/blogabe/homebrew-xplanet/releases/download/xplanet-1.3.1.225-source.2/xplanet-1.3.1.225-source.2.tar.gz"
-  sha256 "f4211953d92f450e70e26516b82e7b4e199e0fbce10b020baa356bc1e0e9014c"
-  version "1.3.1.225"
+  url "https://github.com/blogabe/xplanet-src/releases/download/v1.4.0/xplanet-1.4.0.tar.gz"
+  sha256 "ed3d1aadcacdd52e761ecb8534c7f4e86e48a614fbf6490773e66208414f808f"
+  version "1.4.0"
   license "GPL-2.0-or-later"
-  revision 3
 
   option "with-all", "Build with all default Xplanet configuration dependencies"
   option "with-cspice", "Build Xplanet with JPLs SPICE toolkit support"
